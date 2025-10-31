@@ -1,0 +1,6 @@
+@Stops_HostAddress = http://localhost:5234
+
+GET {{Stops_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
