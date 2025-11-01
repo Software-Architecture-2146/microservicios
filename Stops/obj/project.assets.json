@@ -81,11 +81,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\python\\Microservicio\\Stops\\Stops.csproj",
+      "projectUniqueName": "D:\\angel\\microservicios\\Stops\\Stops.csproj",
       "projectName": "Stops",
-      "projectPath": "D:\\python\\Microservicio\\Stops\\Stops.csproj",
+      "projectPath": "D:\\angel\\microservicios\\Stops\\Stops.csproj",
       "packagesPath": "C:\\Users\\USUARIO\\.nuget\\packages\\",
-      "outputPath": "D:\\python\\Microservicio\\Stops\\obj\\",
+      "outputPath": "D:\\angel\\microservicios\\Stops\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

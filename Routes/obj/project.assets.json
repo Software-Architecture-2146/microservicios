@@ -81,11 +81,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\python\\Microservicio\\Routes\\Routes.csproj",
+      "projectUniqueName": "D:\\angel\\microservicios\\Routes\\Routes.csproj",
       "projectName": "Routes",
-      "projectPath": "D:\\python\\Microservicio\\Routes\\Routes.csproj",
+      "projectPath": "D:\\angel\\microservicios\\Routes\\Routes.csproj",
       "packagesPath": "C:\\Users\\USUARIO\\.nuget\\packages\\",
-      "outputPath": "D:\\python\\Microservicio\\Routes\\obj\\",
+      "outputPath": "D:\\angel\\microservicios\\Routes\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
