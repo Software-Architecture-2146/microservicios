@@ -33,4 +33,9 @@
         <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.12.0" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Shared\Domain\Services\" />
+      <Folder Include="Shared\Infrastructure\" />
+    </ItemGroup>
+
 </Project>
