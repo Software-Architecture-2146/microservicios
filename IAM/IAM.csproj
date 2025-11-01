@@ -35,12 +35,4 @@
         <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.12.0" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="IAM\Application\Internal\CommandServices\" />
-      <Folder Include="IAM\Application\Internal\QueryServices\" />
-      <Folder Include="IAM\Infrastructure\Persistence\" />
-      <Folder Include="IAM\Infrastructure\Pipeline\" />
-      <Folder Include="IAM\Infrastructure\Tokens\" />
-    </ItemGroup>
-
 </Project>
