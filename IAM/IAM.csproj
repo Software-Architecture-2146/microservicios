@@ -34,7 +34,8 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="IAM\Domain\Model\Aggregates\" />
+      <Folder Include="IAM\Domain\Model\Commands\" />
+      <Folder Include="IAM\Domain\Model\Queries\" />
     </ItemGroup>
 
 </Project>
