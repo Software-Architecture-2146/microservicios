@@ -33,9 +33,4 @@
         <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.12.0" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="IAM\Domain\Model\Commands\" />
-      <Folder Include="IAM\Domain\Model\Queries\" />
-    </ItemGroup>
-
 </Project>
