@@ -35,7 +35,9 @@
 
     <ItemGroup>
       <Folder Include="Shared\Domain\Services\" />
-      <Folder Include="Shared\Infrastructure\" />
+      <Folder Include="Shared\Infrastructure\Configuration\" />
+      <Folder Include="Shared\Infrastructure\Persistences\" />
+      <Folder Include="Shared\Infrastructure\Services\" />
     </ItemGroup>
 
 </Project>
