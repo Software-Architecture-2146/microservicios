@@ -1,11 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "2ncuP6J/ymE=",
+  "dgSpecHash": "5IC49PlzR+0=",
   "success": true,
-  "projectFilePath": "D:\\python\\Microservicio\\Stops\\Stops.csproj",
+  "projectFilePath": "D:\\Ejercicios_JetBrains\\TF_Fundamentos_Backend_Microservicios\\Stops\\Stops.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\USUARIO\\.nuget\\packages\\microsoft.aspnetcore.openapi\\9.0.9\\microsoft.aspnetcore.openapi.9.0.9.nupkg.sha512",
-    "C:\\Users\\USUARIO\\.nuget\\packages\\microsoft.openapi\\1.6.17\\microsoft.openapi.1.6.17.nupkg.sha512"
+    "C:\\Users\\abrah\\.nuget\\packages\\microsoft.aspnetcore.openapi\\9.0.9\\microsoft.aspnetcore.openapi.9.0.9.nupkg.sha512",
+    "C:\\Users\\abrah\\.nuget\\packages\\microsoft.openapi\\1.6.17\\microsoft.openapi.1.6.17.nupkg.sha512"
   ],
   "logs": []
 }

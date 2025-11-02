@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "D:\\python\\Microservicio\\IAM\\IAM.csproj": {}
+    "D:\\Ejercicios_JetBrains\\TF_Fundamentos_Backend_Microservicios\\IAM\\IAM.csproj": {}
   },
   "projects": {
-    "D:\\python\\Microservicio\\IAM\\IAM.csproj": {
+    "D:\\Ejercicios_JetBrains\\TF_Fundamentos_Backend_Microservicios\\IAM\\IAM.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\python\\Microservicio\\IAM\\IAM.csproj",
+        "projectUniqueName": "D:\\Ejercicios_JetBrains\\TF_Fundamentos_Backend_Microservicios\\IAM\\IAM.csproj",
         "projectName": "IAM",
-        "projectPath": "D:\\python\\Microservicio\\IAM\\IAM.csproj",
-        "packagesPath": "C:\\Users\\USUARIO\\.nuget\\packages\\",
-        "outputPath": "D:\\python\\Microservicio\\IAM\\obj\\",
+        "projectPath": "D:\\Ejercicios_JetBrains\\TF_Fundamentos_Backend_Microservicios\\IAM\\IAM.csproj",
+        "packagesPath": "C:\\Users\\abrah\\.nuget\\packages\\",
+        "outputPath": "D:\\Ejercicios_JetBrains\\TF_Fundamentos_Backend_Microservicios\\IAM\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+          "D:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\USUARIO\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\abrah\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -26,6 +26,7 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
