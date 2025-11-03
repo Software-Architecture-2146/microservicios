@@ -1,8 +1,9 @@
-﻿using IAM.IAM.Application.Internal.OutboundServices;
-using IAM.IAM.Domain.Services;
-using IAM.IAM.Infrastructure.Pipeline.Middleware.Attributes;
+using Frock_backend.IAM.Application.Internal.OutboundServices;
+using Frock_backend.IAM.Domain.Model.Queries;
+using Frock_backend.IAM.Domain.Services;
+using Frock_backend.IAM.Infrastructure.Pipeline.Middleware.Attributes;
 
-namespace IAM.IAM.Infrastructure.Pipeline.Middleware.Components;
+namespace Frock_backend.IAM.Infrastructure.Pipeline.Middleware.Components;
 
 public class RequestAuthorizationMiddleware(RequestDelegate next)
 {
@@ -11,56 +12,71 @@ public class RequestAuthorizationMiddleware(RequestDelegate next)
         IUserQueryService userQueryService,
         ITokenService tokenService)
     {
-        Console.WriteLine("Entering InvokeAsync");
-        // skip authorization if endpoint is decorated with [AllowAnonymous] attribute
-        var endpoint = context.Request.HttpContext.GetEndpoint();
-        if (endpoint == null)
+        // Skip authorization for OPTIONS requests (CORS preflight)
+        if (context.Request.Method == HttpMethods.Options)
         {
-            Console.WriteLine("No endpoint found, proceeding with authorization");
+            await next(context);
+            return;
         }
-        else
+
+        // Check if endpoint allows anonymous access
+        var endpoint = context.GetEndpoint();
+        if (endpoint != null)
         {
             var allowAnonymous = endpoint.Metadata
                 .Any(m => m.GetType() == typeof(AllowAnonymousAttribute));
-            Console.WriteLine($"Allow Anonymous is {allowAnonymous}");
+            
             if (allowAnonymous)
             {
-                Console.WriteLine("Skipping authorization");
                 await next(context);
                 return;
             }
         }
-        Console.WriteLine("Entering authorization");
-        // get token from request header
-        var token = context.Request.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last();
 
-
-        // if token is null then throw exception
-        //if (token == null) throw new Exception("Null or invalid token");
-
-        // validate token
-        var userId = await tokenService.ValidateToken(token);
-
-        // if token is invalid then throw exception
-        //if (userId == null) throw new Exception("Invalid token");
-
-        // get user by id
-       /// var getUserByIdQuery = new GetUserByIdQuery(userId.Value);
-
-        // set user in HttpContext.Items["User"]
-
-        //var user = await userQueryService.Handle(getUserByIdQuery);
-        Console.WriteLine("Successful authorization. Updating Context...");
-        context.Items["User"] = 1; // user;
-        Console.WriteLine("Continuing with Middleware Pipeline");
-        // call next middleware
-        if (context.Request.Method == HttpMethods.Options)
+        // Get token from Authorization header
+        var authHeader = context.Request.Headers["Authorization"].FirstOrDefault();
+        if (string.IsNullOrEmpty(authHeader) || !authHeader.StartsWith("Bearer "))
         {
-            Console.WriteLine("Skipping authorization for OPTIONS request");
-
+            context.Response.StatusCode = 401;
+            await context.Response.WriteAsync("Missing or invalid authorization header");
+            return;
         }
-        await next(context);
-        return;
 
+        var token = authHeader["Bearer ".Length..].Trim();
+
+        // Validate token
+        var userId = await tokenService.ValidateToken(token);
+        if (userId == null)
+        {
+            context.Response.StatusCode = 401;
+            await context.Response.WriteAsync("Invalid or expired token");
+            return;
+        }
+
+        // Get user by id and set in context
+        try
+        {
+            var getUserByIdQuery = new GetUserByIdQuery(userId.Value);
+            var user = await userQueryService.Handle(getUserByIdQuery);
+            
+            if (user == null)
+            {
+                context.Response.StatusCode = 401;
+                await context.Response.WriteAsync("User not found");
+                return;
+            }
+
+            context.Items["User"] = user;
+            context.Items["UserId"] = userId.Value;
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Authorization error: {ex}");
+            context.Response.StatusCode = 500;
+            await context.Response.WriteAsync("Authorization error");
+            return;
+        }
+
+        await next(context);
     }
 }

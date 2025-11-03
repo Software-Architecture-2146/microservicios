@@ -1,8 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using Frock_backend.IAM.Application.Internal.QueryServices;
+using Frock_backend.IAM.Domain.Model.Aggregates;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 
-namespace IAM.IAM.Infrastructure.Pipeline.Middleware.Attributes;
-
+namespace Frock_backend.IAM.Infrastructure.Pipeline.Middleware.Attributes;
 [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
 public class AuthorizeAttribute : Attribute, IAuthorizationFilter
 {

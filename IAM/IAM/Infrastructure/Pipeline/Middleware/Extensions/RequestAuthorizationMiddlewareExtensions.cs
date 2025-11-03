@@ -1,7 +1,11 @@
-﻿using IAM.IAM.Infrastructure.Pipeline.Middleware.Components;
+using Frock_backend.IAM.Infrastructure.Pipeline.Middleware.Components;
 
-namespace IAM.IAM.Infrastructure.Pipeline.Middleware.Extensions;
+namespace Frock_backend.IAM.Infrastructure.Pipeline.Middleware.Extensions;
 
+/**
+ * RequestAuthorizationMiddlewareExtensions
+ * This class includes a method extension to register RequestAuthorizationMiddleware in the ASP.NET Core pipeline.
+ */
 public static class RequestAuthorizationMiddlewareExtensions
 {
     /**

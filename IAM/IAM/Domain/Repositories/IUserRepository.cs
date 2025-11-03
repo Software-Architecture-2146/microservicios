@@ -1,8 +1,7 @@
-﻿using IAM.IAM.Domain.Model.Aggregates;
-using IAM.Shared.Domain.Repositories;
+using Frock_backend.IAM.Domain.Model.Aggregates;
+using Frock_backend.shared.Domain.Repositories;
 
-namespace IAM.IAM.Domain.Repositories;
-
+namespace Frock_backend.IAM.Domain.Repositories;
 public interface IUserRepository : IBaseRepository<User>
 {
     /**

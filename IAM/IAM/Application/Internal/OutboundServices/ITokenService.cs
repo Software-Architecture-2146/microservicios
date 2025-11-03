@@ -1,7 +1,6 @@
-﻿using IAM.IAM.Domain.Model.Aggregates;
+using Frock_backend.IAM.Domain.Model.Aggregates;
 
-namespace IAM.IAM.Application.Internal.OutboundServices;
-
+namespace Frock_backend.IAM.Application.Internal.OutboundServices;
 public interface ITokenService
 {
     /**

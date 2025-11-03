@@ -1,12 +1,11 @@
-﻿using IAM.IAM.Application.Internal.OutboundServices;
-using IAM.IAM.Domain.Model.Aggregates;
-using IAM.IAM.Domain.Model.Commands;
-using IAM.IAM.Domain.Repositories;
-using IAM.IAM.Domain.Services;
-using IAM.Shared.Domain.Repositories;
+using Frock_backend.IAM.Application.Internal.OutboundServices;
+using Frock_backend.IAM.Domain.Model.Aggregates;
+using Frock_backend.IAM.Domain.Model.Commands;
+using Frock_backend.IAM.Domain.Repositories;
+using Frock_backend.IAM.Domain.Services;
+using Frock_backend.shared.Domain.Repositories;
 
-namespace IAM.IAM.Application.Internal.CommandServices;
-
+namespace Frock_backend.IAM.Application.Internal.CommandServices;
 public class UserCommandService(
     IUserRepository userRepository,
     ITokenService tokenService,
@@ -23,10 +22,23 @@ public class UserCommandService(
      */
     public async Task<(User user, string token)> Handle(SignInCommand command)
     {
+        if (command == null)
+            throw new ArgumentNullException(nameof(command));
+
+        if (string.IsNullOrWhiteSpace(command.Email))
+            throw new ArgumentException("Email is required", nameof(command.Email));
+
+        if (string.IsNullOrWhiteSpace(command.Password))
+            throw new ArgumentException("Password is required", nameof(command.Password));
+
         var user = await userRepository.FindByEmailAsync(command.Email);
 
-        if (user == null || !hashingService.VerifyPassword(command.Password, user.PasswordHash))
-            throw new Exception("Invalid email or password");
+        if (user == null)
+            throw new UnauthorizedAccessException("Invalid email or password");
+
+        if (string.IsNullOrEmpty(user.PasswordHash) || 
+            !hashingService.VerifyPassword(command.Password, user.PasswordHash))
+            throw new UnauthorizedAccessException("Invalid email or password");
 
         var token = tokenService.GenerateToken(user);
 
@@ -42,9 +54,21 @@ public class UserCommandService(
      */
     public async Task Handle(SignUpCommand command)
     {
-        /*    if (await userRepository.ExistsByName(command.Name))
-                throw new Exception($"Name '{command.Nname}' is already taken");
-        */
+        if (command == null)
+            throw new ArgumentNullException(nameof(command));
+
+        if (string.IsNullOrWhiteSpace(command.Email))
+            throw new ArgumentException("Email is required", nameof(command.Email));
+
+        if (string.IsNullOrWhiteSpace(command.Username))
+            throw new ArgumentException("Username is required", nameof(command.Username));
+
+        if (string.IsNullOrWhiteSpace(command.Password))
+            throw new ArgumentException("Password is required", nameof(command.Password));
+
+        if (command.Password.Length < 6)
+            throw new ArgumentException("Password must be at least 6 characters long", nameof(command.Password));
+
         if (await userRepository.ExistsByEmail(command.Email))
             throw new Exception($"Email '{command.Email}' is already registered");
 

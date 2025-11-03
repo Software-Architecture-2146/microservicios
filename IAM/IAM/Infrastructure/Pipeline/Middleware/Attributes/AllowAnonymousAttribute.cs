@@ -1,4 +1,4 @@
-﻿namespace IAM.IAM.Infrastructure.Pipeline.Middleware.Attributes;
+namespace Frock_backend.IAM.Infrastructure.Pipeline.Middleware.Attributes;
 
 /**
  * This attribute is used to decorate controllers and actions that do not require authorization.
@@ -7,5 +7,4 @@
 [AttributeUsage(AttributeTargets.Method)]
 public class AllowAnonymousAttribute : Attribute
 {
-    
 }

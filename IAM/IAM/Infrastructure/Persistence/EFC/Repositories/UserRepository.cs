@@ -1,10 +1,10 @@
-﻿using IAM.IAM.Domain.Model.Aggregates;
-using IAM.IAM.Domain.Repositories;
-using IAM.Shared.Infrastructure.Persistences.EFC.Configuration;
-using IAM.Shared.Infrastructure.Persistences.EFC.Repositories;
+using Frock_backend.IAM.Domain.Model.Aggregates;
+using Frock_backend.IAM.Domain.Repositories;
+using Frock_backend.shared.Infrastructure.Persistences.EFC.Configuration;
+using Frock_backend.shared.Infrastructure.Persistences.EFC.Repositories;
 using Microsoft.EntityFrameworkCore;
 
-namespace IAM.IAM.Infrastructure.Persistence.EFC.Repositories;
+namespace Frock_backend.IAM.Infrastructure.Persistence.EFC.Repositories;
 
 public class UserRepository(AppDbContext context) : BaseRepository<User>(context), IUserRepository
 {

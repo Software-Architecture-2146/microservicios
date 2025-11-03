@@ -1,10 +1,9 @@
-﻿using IAM.IAM.Domain.Model.Aggregates;
-using IAM.IAM.Domain.Model.Queries;
-using IAM.IAM.Domain.Repositories;
-using IAM.IAM.Domain.Services;
+using Frock_backend.IAM.Domain.Model.Aggregates;
+using Frock_backend.IAM.Domain.Model.Queries;
+using Frock_backend.IAM.Domain.Repositories;
+using Frock_backend.IAM.Domain.Services;
 
-namespace IAM.IAM.Application.Internal.QueryServices;
-
+namespace Frock_backend.IAM.Application.Internal.QueryServices;
 public class UserQueryService(IUserRepository userRepository) : IUserQueryService
 {
     /**

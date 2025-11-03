@@ -1,7 +1,6 @@
-﻿using IAM.IAM.Domain.Model.ValueObjects;
+using Frock_backend.IAM.Domain.Model.ValueObjects;
 
-namespace IAM.IAM.Domain.Model.Commands;
-
+namespace Frock_backend.IAM.Domain.Model.Commands;
 public class SignUpCommand
 {
     public string Email { get; set; } = string.Empty;

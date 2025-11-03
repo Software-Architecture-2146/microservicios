@@ -2,27 +2,30 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 
 //SHARED
-using IAM.Shared.Infrastructure.Persistences.EFC.Configuration; 
-using IAM.Shared.Infrastructure.Persistences.EFC.Repositories;
-using IAM.Shared.Infrastructure.Interfaces.ASP.Configuration;
-using IAM.Shared.Domain.Repositories;
+using Frock_backend.shared.Infrastructure.Persistences.EFC.Configuration;
+using Frock_backend.shared.Infrastructure.Persistences.EFC.Repositories;
+using Frock_backend.shared.Infrastructure.Interfaces.ASP.Configuration;
+using Frock_backend.shared.Domain.Repositories;
 
 //IAM - Adrian
-using IAM.IAM.Application.Internal.CommandServices;
-using IAM.IAM.Application.Internal.OutboundServices;
-using IAM.IAM.Application.Internal.QueryServices;
+using Frock_backend.IAM.Application.Internal.CommandServices;
+using Frock_backend.IAM.Application.Internal.OutboundServices;
+using Frock_backend.IAM.Application.Internal.QueryServices;
 
-using IAM.IAM.Domain.Repositories;
-using IAM.IAM.Domain.Services;
-using IAM.IAM.Infrastructure.Persistence.EFC.Repositories;
+using Frock_backend.IAM.Domain.Repositories;
+using Frock_backend.IAM.Domain.Services;
+using Frock_backend.IAM.Infrastructure.Persistence.EFC.Repositories;
 
-using IAM.IAM.Infrastructure.Hashing.Hashing.BCrypt.Services;
-using IAM.IAM.Infrastructure.Pipeline.Middleware.Extensions;
-using IAM.IAM.Infrastructure.Tokens.JWT.Configuration;
-using IAM.IAM.Infrastructure.Tokens.JWT.Services;
+using Frock_backend.IAM.Infrastructure.Hashing.BCrypt.Services;
+using Frock_backend.IAM.Infrastructure.Pipeline.Middleware.Extensions;
+using Frock_backend.IAM.Infrastructure.Tokens.JWT.Configuration;
+using Frock_backend.IAM.Infrastructure.Tokens.JWT.Services;
 
-using IAM.IAM.Interfaces.ACL;
-using IAM.IAM.Interfaces.ACL.Services;
+using Frock_backend.IAM.Interfaces.ACL;
+using Frock_backend.IAM.Interfaces.ACL.Services;
+using Frock_backend.shared.Domain.Services;
+using Frock_backend.shared.Infrastructure.Configuration;
+using Frock_backend.shared.Infrastructure.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -37,12 +40,12 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>
 {
     options.EnableAnnotations();
-    options.SwaggerDoc("v1",
+     options.SwaggerDoc("v1",
         new OpenApiInfo
         {
-            Title = "Frock_Backend",
+            Title = "Microservice IAM",
             Version = "v1",
-            Description = "Frock Backend API",
+            Description = "Frock Backend API-IAM",
             TermsOfService = new Uri("https://acme-learning.com/tos"),
             Contact = new OpenApiContact
             {
@@ -80,6 +83,13 @@ builder.Services.AddSwaggerGen(options =>
     });
 });
 
+/// <summary>
+/// Obtiene la cadena de conexión a la base de datos MySQL desde la configuración de la aplicación.
+/// </summary>
+/// <remarks>
+/// El valor se extrae de la sección "ConnectionStrings" del archivo `appsettings.json`,
+/// buscando la clave "DefaultConnection".
+/// </remarks>
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
 if (connectionString is null)
@@ -114,7 +124,7 @@ builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 // IAM Bounded Context Injection Configuration
 // TokenSettings Configuration
-builder.Services.Configure<TokenSetting>(builder.Configuration.GetSection("TokenSettings"));
+builder.Services.Configure<TokenSettings>(builder.Configuration.GetSection("TokenSettings"));
 
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IUserCommandService, UserCommandService>();
@@ -123,7 +133,23 @@ builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddScoped<IHashingService, HashingService>();
 builder.Services.AddScoped<IIamContextFacade, IamContextFacade>();
 
+//CORS
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(policy =>
+    {
+        policy.WithOrigins("http://localhost:5173", "https://deft-tapioca-c27a9c.netlify.app", "https://frock-front-end.vercel.app")//ajustar
+              .AllowAnyHeader()
+              .AllowAnyMethod();
+    });
+});
+
+// Cloudinary Configuration
+builder.Services.Configure<CloudinarySettings>(builder.Configuration.GetSection("Cloudinary"));
+builder.Services.AddScoped<ICloudinaryService, CloudinaryService>();
+
 var app = builder.Build();
+
 app.UseCors();
 
 // Verify Database Objects are created

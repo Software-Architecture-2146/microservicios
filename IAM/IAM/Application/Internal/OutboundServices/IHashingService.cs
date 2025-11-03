@@ -1,4 +1,5 @@
-﻿namespace IAM.IAM.Application.Internal.OutboundServices;
+namespace Frock_backend.IAM.Application.Internal.OutboundServices;
+
 /**
  * <summary>
  *     The hashing service interface

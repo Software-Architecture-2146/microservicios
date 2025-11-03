@@ -1,9 +1,9 @@
-﻿using System.Text.Json.Serialization;
-using IAM.IAM.Domain.Model.ValueObjects;
+using Frock_backend.IAM.Domain.Model.ValueObjects;
+using System.Text.Json.Serialization;
 
-namespace IAM.IAM.Domain.Model.Aggregates;
+namespace Frock_backend.IAM.Domain.Model.Aggregates;
 
-public class User (string email, string username, string passwordHash, Role role)
+public class User(string email, string username, string passwordHash, Role role)
 {
     public User() : this(string.Empty, string.Empty, string.Empty, Role.Traveller)
     {
@@ -15,4 +15,27 @@ public class User (string email, string username, string passwordHash, Role role
     public Role Role { get; private set; } = role;
 
     [JsonIgnore] public string PasswordHash { get; private set; } = passwordHash;
+
+    public User UpdateEmail(string email)
+    {
+        Email = email;
+        return this;
+    }
+
+    public User UpdateUsername(string username)
+    {
+        Username = username;
+        return this;
+    }
+
+    public User UpdatePasswordHash(string passwordHash)
+    {
+        PasswordHash = passwordHash;
+        return this;
+    }
+    public User UpdateRole(Role role)
+    {
+        Role = role;
+        return this;
+    }
 }

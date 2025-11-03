@@ -1,7 +1,6 @@
+using Frock_backend.IAM.Domain.Model.ValueObjects;
 
-using IAM.IAM.Domain.Model.ValueObjects;
-
-namespace IAM.IAM.Interfaces.ACL;
+namespace Frock_backend.IAM.Interfaces.ACL;
 
 public interface IIamContextFacade
 {

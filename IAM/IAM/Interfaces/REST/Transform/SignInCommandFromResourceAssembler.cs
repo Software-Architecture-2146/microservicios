@@ -1,5 +1,5 @@
-using IAM.IAM.Domain.Model.Commands;
-using IAM.IAM.Interfaces.REST.Resources;
+using Frock_backend.IAM.Domain.Model.Commands;
+using Frock_backend.IAM.Interfaces.REST.Resources;
 
 namespace Frock_backend.IAM.Interfaces.REST.Transform;
 

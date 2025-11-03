@@ -1,7 +1,7 @@
-﻿using IAM.IAM.Domain.Model.Aggregates;
-using IAM.IAM.Domain.Model.Commands;
+using Frock_backend.IAM.Domain.Model.Aggregates;
+using Frock_backend.IAM.Domain.Model.Commands;
 
-namespace IAM.IAM.Domain.Services;
+namespace Frock_backend.IAM.Domain.Services;
 
 public interface IUserCommandService
 {

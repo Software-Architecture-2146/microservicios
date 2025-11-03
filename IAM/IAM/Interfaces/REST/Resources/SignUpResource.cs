@@ -1,7 +1,6 @@
+using Frock_backend.IAM.Domain.Model.ValueObjects;
 
-using IAM.IAM.Domain.Model.ValueObjects;
-
-namespace IAM.IAM.Interfaces.REST.Resources;
+namespace Frock_backend.IAM.Interfaces.REST.Resources;
 
 
 public class SignUpResource

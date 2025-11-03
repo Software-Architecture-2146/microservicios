@@ -1,3 +1,3 @@
-﻿namespace IAM.IAM.Domain.Model.Queries;
+namespace Frock_backend.IAM.Domain.Model.Queries;
 
 public record GetAllUsersQuery();

@@ -1,12 +1,12 @@
-using IAM.IAM.Domain.Model.Aggregates;
-using IAM.IAM.Interfaces.REST.Resources;
+using Frock_backend.IAM.Domain.Model.Aggregates;
+using Frock_backend.IAM.Interfaces.REST.Resources;
 
-namespace IAM.IAM.Interfaces.REST.Transform;
+namespace Frock_backend.IAM.Interfaces.REST.Transform;
 
 public static class UserResourceFromEntityAssembler
 {
     public static UserResource ToResourceFromEntity(User user)
     {
-        return new UserResource(user.Id, user.Username, user.Role);
+        return new UserResource(user.Id, user.Email, user.Username, user.Role);
     }
 }

@@ -1,5 +1,5 @@
-using IAM.IAM.Domain.Model.ValueObjects;
+using Frock_backend.IAM.Domain.Model.ValueObjects;
 
-namespace IAM.IAM.Interfaces.REST.Resources;
+namespace Frock_backend.IAM.Interfaces.REST.Resources;
 
-public record UserResource(int Id, string Username, Role Role);
+public record UserResource(int Id, string Email, string Username, Role Role);

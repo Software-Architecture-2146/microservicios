@@ -1,8 +1,7 @@
-﻿using IAM.IAM.Domain.Model.Aggregates;
-using IAM.IAM.Domain.Model.Queries;
+using Frock_backend.IAM.Domain.Model.Aggregates;
+using Frock_backend.IAM.Domain.Model.Queries;
 
-namespace IAM.IAM.Domain.Services;
-
+namespace Frock_backend.IAM.Domain.Services;
 public interface IUserQueryService
 {
     /**

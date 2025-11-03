@@ -1,9 +1,9 @@
-using IAM.IAM.Domain.Model.Commands;
-using IAM.IAM.Domain.Model.Queries;
-using IAM.IAM.Domain.Model.ValueObjects;
-using IAM.IAM.Domain.Services;
+using Frock_backend.IAM.Domain.Model.Commands;
+using Frock_backend.IAM.Domain.Model.Queries;
+using Frock_backend.IAM.Domain.Model.ValueObjects;
+using Frock_backend.IAM.Domain.Services;
 
-namespace IAM.IAM.Interfaces.ACL.Services;
+namespace Frock_backend.IAM.Interfaces.ACL.Services;
 public class IamContextFacade(IUserCommandService userCommandService, IUserQueryService userQueryService) : IIamContextFacade
 {
     /**
@@ -17,7 +17,7 @@ public class IamContextFacade(IUserCommandService userCommandService, IUserQuery
      */
     public async Task<int> CreateUser(string username, string email, string password, Role role)
     {
-        var signUpCommand = new SignUpCommand()
+        var signUpCommand = new SignUpCommand
         {
             Username = username,
             Email = email,

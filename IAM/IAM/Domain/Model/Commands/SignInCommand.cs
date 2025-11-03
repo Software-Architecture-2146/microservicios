@@ -1,3 +1,3 @@
-﻿namespace IAM.IAM.Domain.Model.Commands;
+namespace Frock_backend.IAM.Domain.Model.Commands;
 
 public record SignInCommand(string Email, string Password);

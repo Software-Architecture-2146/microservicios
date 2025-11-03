@@ -1,7 +1,8 @@
-﻿namespace IAM.IAM.Domain.Model.ValueObjects;
-
-public enum Role
+﻿namespace Frock_backend.IAM.Domain.Model.ValueObjects
 {
-    Traveller = 0,
-    TransportManager = 1
+    public enum Role
+    {
+        Traveller = 0,
+        TransportManager = 1
+    }
 }

@@ -1,17 +1,18 @@
-﻿using System.Security.Claims;
-using System.Text;
-using IAM.IAM.Application.Internal.OutboundServices;
-using IAM.IAM.Domain.Model.Aggregates;
-using IAM.IAM.Infrastructure.Tokens.JWT.Configuration;
-using Microsoft.Extensions.Options;
+
 using Microsoft.IdentityModel.JsonWebTokens;
+using System.Security.Claims;
+using System.Text;
+using Frock_backend.IAM.Application.Internal.OutboundServices;
+using Frock_backend.IAM.Domain.Model.Aggregates;
+using Frock_backend.IAM.Infrastructure.Tokens.JWT.Configuration;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 
-namespace IAM.IAM.Infrastructure.Tokens.JWT.Services;
+namespace Frock_backend.IAM.Infrastructure.Tokens.JWT.Services;
 
-public class TokenService(IOptions<TokenSetting> tokenSettings) : ITokenService
+public class TokenService(IOptions<TokenSettings> tokenSettings) : ITokenService
 {
-    private readonly TokenSetting _tokenSettings = tokenSettings.Value;
+    private readonly TokenSettings _tokenSettings = tokenSettings.Value;
 
     /**
      * <summary>
@@ -22,19 +23,35 @@ public class TokenService(IOptions<TokenSetting> tokenSettings) : ITokenService
      */
     public string GenerateToken(User user)
     {
+        if (user == null)
+            throw new ArgumentNullException(nameof(user), "User cannot be null");
+
+        if (string.IsNullOrEmpty(_tokenSettings.Secret))
+            throw new InvalidOperationException("JWT Secret is not configured properly");
+
+        if (_tokenSettings.Secret.Length < 32)
+            throw new InvalidOperationException("JWT Secret must be at least 32 characters long");
+
         var secret = _tokenSettings.Secret;
-        var key = Encoding.ASCII.GetBytes(secret);
-        var tokenDescriptor = new SecurityTokenDescriptor()
+        var key = Encoding.UTF8.GetBytes(secret);
+        
+        var tokenDescriptor = new SecurityTokenDescriptor
         {
             Subject = new ClaimsIdentity(new[]
             {
                 new Claim(ClaimTypes.Sid, user.Id.ToString()),
-                new Claim(ClaimTypes.Name, user.Username)
+                new Claim(ClaimTypes.Name, user.Username ?? string.Empty),
+                new Claim(ClaimTypes.Email, user.Email ?? string.Empty),
+                new Claim(ClaimTypes.Role, user.Role.ToString())
             }),
-            Expires = DateTime.UtcNow.AddDays(7),
-            SigningCredentials =
-                new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+            Expires = DateTime.UtcNow.AddDays(_tokenSettings.ExpirationInDays),
+            Issuer = _tokenSettings.Issuer,
+            Audience = _tokenSettings.Audience,
+            SigningCredentials = new SigningCredentials(
+                new SymmetricSecurityKey(key), 
+                SecurityAlgorithms.HmacSha256Signature)
         };
+        
         var tokenHandler = new JsonWebTokenHandler();
 
         var token = tokenHandler.CreateToken(tokenDescriptor);
@@ -50,32 +67,43 @@ public class TokenService(IOptions<TokenSetting> tokenSettings) : ITokenService
      */
     public async Task<int?> ValidateToken(string token)
     {
-        // If token is null or empty
         if (string.IsNullOrEmpty(token))
-            // Return null 
             return null;
-        // Otherwise, perform validation
+
+        if (string.IsNullOrEmpty(_tokenSettings.Secret))
+            return null;
+
         var tokenHandler = new JsonWebTokenHandler();
-        var key = Encoding.ASCII.GetBytes(_tokenSettings.Secret);
+        var key = Encoding.UTF8.GetBytes(_tokenSettings.Secret);
+        
         try
         {
             var tokenValidationResult = await tokenHandler.ValidateTokenAsync(token, new TokenValidationParameters
             {
                 ValidateIssuerSigningKey = true,
                 IssuerSigningKey = new SymmetricSecurityKey(key),
-                ValidateIssuer = false,
-                ValidateAudience = false,
-                // Expiration without delay
+                ValidateIssuer = true,
+                ValidIssuer = _tokenSettings.Issuer,
+                ValidateAudience = true,
+                ValidAudience = _tokenSettings.Audience,
+                ValidateLifetime = true,
                 ClockSkew = TimeSpan.Zero
             });
 
+            if (!tokenValidationResult.IsValid)
+                return null;
+
             var jwtToken = (JsonWebToken)tokenValidationResult.SecurityToken;
-            var userId = int.Parse(jwtToken.Claims.First(claim => claim.Type == ClaimTypes.Sid).Value);
+            var userIdClaim = jwtToken.Claims.FirstOrDefault(claim => claim.Type == ClaimTypes.Sid);
+            
+            if (userIdClaim == null || !int.TryParse(userIdClaim.Value, out var userId))
+                return null;
+
             return userId;
         }
         catch (Exception e)
         {
-            Console.WriteLine(e);
+            Console.WriteLine($"Token validation error: {e.Message}");
             return null;
         }
     }
