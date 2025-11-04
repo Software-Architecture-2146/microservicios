@@ -1,0 +1,66 @@
+services:
+  mysql_company:
+    image: mysql:8
+    container_name: mysql_company
+    command: --default-authentication-plugin=mysql_native_password
+    environment:
+      MYSQL_ROOT_PASSWORD: admin123           # tu clave
+      MYSQL_DATABASE: frockdb                # tu DB
+      MYSQL_USER: app
+      MYSQL_PASSWORD: admin123
+      TZ: "America/Lima"
+    ports:
+      - "3307:3306"                          # 3307 en tu PC, 3306 dentro del contenedor
+    volumes:
+      - mysql_company_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -proot || exit 1", "CMD", "mysqladmin", "ping", "-padmin123"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq
+    environment:
+      RABBITMQ_DEFAULT_USER: admin
+      RABBITMQ_DEFAULT_PASS: admin123
+    ports:
+      - "5672:5672"
+      - "15672:15672"                         # consola web
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "status"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  company_api:
+    build:
+      context: .
+      dockerfile: Company/Dockerfile
+    container_name: company_api
+    depends_on:
+      mysql_company:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
+    environment:
+      # .NET escucha en 8080 dentro del contenedor
+      ASPNETCORE_URLS: http://+:8080
+      ASPNETCORE_ENVIRONMENT: Development
+
+      # Conexión a MySQL usando el NOMBRE DEL SERVICIO (no localhost)
+      ConnectionStrings__DefaultConnection: "server=mysql_company;port=3307;database=frockdb;user=root;password=admin123;AllowPublicKeyRetrieval=True;SslMode=None"
+      # RabbitMQ para MassTransit
+      RabbitMq__Host: "rabbitmq"
+      RabbitMq__Port: "5672"
+      RabbitMq__Username: "admin"
+      RabbitMq__Password: "admin123"
+    ports:
+      - "5115:8080"                           # Swagger en tu PC: http://localhost:5115/swagger
+    # opcional: si usas migraciones al arrancar
+    # command: ["dotnet", "Company.dll", "--migrate"]
+
+volumes:
+  mysql_company_data:
+
