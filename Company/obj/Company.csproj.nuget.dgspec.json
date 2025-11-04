@@ -1,31 +1,25 @@
 {
   "format": 1,
   "restore": {
-    "D:\\python\\Microservicio\\Company\\Company.csproj": {}
+    "I:\\microservicios\\Company\\Company.csproj": {}
   },
   "projects": {
-    "D:\\python\\Microservicio\\Company\\Company.csproj": {
+    "I:\\microservicios\\Company\\Company.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\python\\Microservicio\\Company\\Company.csproj",
+        "projectUniqueName": "I:\\microservicios\\Company\\Company.csproj",
         "projectName": "Company",
-        "projectPath": "D:\\python\\Microservicio\\Company\\Company.csproj",
+        "projectPath": "I:\\microservicios\\Company\\Company.csproj",
         "packagesPath": "C:\\Users\\USUARIO\\.nuget\\packages\\",
-        "outputPath": "D:\\python\\Microservicio\\Company\\obj\\",
+        "outputPath": "I:\\microservicios\\Company\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
-          "C:\\Users\\USUARIO\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "C:\\Users\\USUARIO\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net9.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -74,7 +68,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.305/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Users\\USUARIO\\.dotnet\\sdk\\9.0.301/PortableRuntimeIdentifierGraph.json"
         }
       }
     }
